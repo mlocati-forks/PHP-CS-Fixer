@@ -55,18 +55,16 @@ final class ShortEchoTagFixerTest extends AbstractFixerTestCase
     /**
      * @param string      $expected
      * @param null|string $input
-     * @param null|string $format
+     * @param string      $function
      *
      * @dataProvider provideShortToLongFormatCases
      */
-    public function testShortToLongFormat($expected, $input = null, $format = null)
+    public function testShortToLongFormat($expected, $input, $function)
     {
         if (\PHP_VERSION_ID < 50400 && !ini_get('short_open_tag')) {
             static::markTestSkipped('The short_open_tag option is required to be enabled with PHP < 5.4.');
         }
-        if (null !== $format) {
-            $this->fixer->configure(['format' => $format]);
-        }
+        $this->fixer->configure(['format' => 'long', 'long-function' => $function]);
         $this->doTest($expected, $input);
     }
 
@@ -82,7 +80,7 @@ final class ShortEchoTagFixerTest extends AbstractFixerTestCase
         $result = [];
         foreach (['echo', 'print'] as $fn) {
             foreach ($cases as $case) {
-                $result[] = [str_replace('<fn>', $fn, $case[0]), str_replace('<fn>', $fn, $case[1]), "long-{$fn}"];
+                $result[] = [str_replace('<fn>', $fn, $case[0]), str_replace('<fn>', $fn, $case[1]), $fn];
             }
         }
 

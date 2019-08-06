@@ -49,7 +49,7 @@ final class NoShortEchoTagFixer extends AbstractProxyFixer implements Deprecated
     protected function createProxyFixers()
     {
         $fixer = new ShortEchoTagFixer();
-        $fixer->configure(['format' => 'long-echo']);
+        $fixer->configure(['format' => 'long']);
 
         return [$fixer];
     }

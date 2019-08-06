@@ -34,13 +34,19 @@ final class ShortEchoTagFixer extends AbstractFixer implements ConfigurationDefi
     const OPTION_SHORT_ALWAYS = 'short-always';
 
     /** @internal */
+    const OPTION_LONG_FUNCTION = 'long-function';
+
+    /** @internal */
     const FORMAT_SHORT = 'short';
 
     /** @internal */
-    const FORMAT_LONG_ECHO = 'long-echo';
+    const FORMAT_LONG = 'long';
 
     /** @internal */
-    const FORMAT_LONG_PRINT = 'long-print';
+    const LONG_FUNCTION_ECHO = 'echo';
+
+    /** @internal */
+    const LONG_FUNCTION_PRINT = 'print';
 
     /**
      * Array of supported formats in configuration.
@@ -49,8 +55,17 @@ final class ShortEchoTagFixer extends AbstractFixer implements ConfigurationDefi
      */
     private $supportedFormatOptions = [
         self::FORMAT_SHORT,
-        self::FORMAT_LONG_ECHO,
-        self::FORMAT_LONG_PRINT,
+        self::FORMAT_LONG,
+    ];
+
+    /**
+     * Array of supported long functions in configuration.
+     *
+     * @var string[]
+     */
+    private $supportedLongFunctionOptions = [
+        self::LONG_FUNCTION_ECHO,
+        self::LONG_FUNCTION_PRINT,
     ];
 
     /**
@@ -70,9 +85,9 @@ EOT
             'Replace short-echo `<?=` with long format `<?php echo`/`<?php print` syntax, or vice-versa.',
             [
                 new CodeSample($sample),
+                new CodeSample($sample, [self::OPTION_FORMAT => self::FORMAT_LONG]),
+                new CodeSample($sample, [self::OPTION_FORMAT => self::FORMAT_LONG, self::OPTION_LONG_FUNCTION => self::LONG_FUNCTION_PRINT]),
                 new CodeSample($sample, [self::OPTION_FORMAT => self::FORMAT_SHORT]),
-                new CodeSample($sample, [self::OPTION_FORMAT => self::FORMAT_LONG_ECHO]),
-                new CodeSample($sample, [self::OPTION_FORMAT => self::FORMAT_LONG_PRINT]),
                 new CodeSample($sample, [self::OPTION_FORMAT => self::FORMAT_SHORT, self::OPTION_SHORT_ALWAYS => true]),
             ],
             null
@@ -84,20 +99,18 @@ EOT
      */
     public function isCandidate(Tokens $tokens)
     {
-        switch ($this->configuration[self::OPTION_FORMAT]) {
-            case self::FORMAT_SHORT:
-                if (null !== $tokens->findSequence([[\T_OPEN_TAG], [\T_ECHO]])) {
-                    return true;
-                }
-                if (null !== $tokens->findSequence([[\T_OPEN_TAG], [\T_PRINT]])) {
-                    return true;
-                }
+        if (self::FORMAT_SHORT === $this->configuration[self::OPTION_FORMAT]) {
+            if (null !== $tokens->findSequence([[\T_OPEN_TAG], [\T_ECHO]])) {
+                return true;
+            }
+            if (null !== $tokens->findSequence([[\T_OPEN_TAG], [\T_PRINT]])) {
+                return true;
+            }
 
-                return false;
-            case self::FORMAT_LONG_ECHO:
-            case self::FORMAT_LONG_PRINT:
-                return $tokens->isTokenKindFound(\T_OPEN_TAG_WITH_ECHO);
+            return false;
         }
+
+        return $tokens->isTokenKindFound(\T_OPEN_TAG_WITH_ECHO);
     }
 
     /**
@@ -109,6 +122,10 @@ EOT
             (new FixerOptionBuilder(self::OPTION_FORMAT, 'How the fixer should process short/long echo tags'))
                 ->setAllowedValues($this->supportedFormatOptions)
                 ->setDefault(self::FORMAT_SHORT)
+                ->getOption(),
+            (new FixerOptionBuilder(self::OPTION_LONG_FUNCTION, 'The function to be used to expand the short echo tags'))
+                ->setAllowedValues($this->supportedLongFunctionOptions)
+                ->setDefault(self::LONG_FUNCTION_ECHO)
                 ->getOption(),
             (new FixerOptionBuilder(self::OPTION_SHORT_ALWAYS, 'Always render short-echo tags even in case of complex code'))
                 ->setAllowedTypes(['bool'])
@@ -122,19 +139,10 @@ EOT
      */
     protected function applyFix(SplFileInfo $file, Tokens $tokens)
     {
-        switch ($this->configuration[self::OPTION_FORMAT]) {
-            case self::FORMAT_SHORT:
-                $this->longToShort($file, $tokens);
-
-                break;
-            case self::FORMAT_LONG_ECHO:
-                $this->shortToLong($file, $tokens, [T_ECHO, 'echo']);
-
-                break;
-            case self::FORMAT_LONG_PRINT:
-                $this->shortToLong($file, $tokens, [T_PRINT, 'print']);
-
-                break;
+        if (self::FORMAT_SHORT === $this->configuration[self::OPTION_FORMAT]) {
+            $this->longToShort($file, $tokens);
+        } else {
+            $this->shortToLong($file, $tokens);
         }
     }
 
@@ -165,8 +173,13 @@ EOT
         }
     }
 
-    private function shortToLong(SplFileInfo $file, Tokens $tokens, array $echoToken)
+    private function shortToLong(SplFileInfo $file, Tokens $tokens)
     {
+        if (self::LONG_FUNCTION_PRINT === $this->configuration[self::OPTION_LONG_FUNCTION]) {
+            $echoToken = [\T_PRINT, 'print'];
+        } else {
+            $echoToken = [\T_ECHO, 'echo'];
+        }
         $offset = $tokens->count() - 1;
         for (;;) {
             $found = $tokens->getPrevTokenOfKind($offset, [[\T_OPEN_TAG_WITH_ECHO]]);

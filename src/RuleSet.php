@@ -252,7 +252,7 @@ final class RuleSet implements RuleSetInterface
             'phpdoc_types_order' => true,
             'phpdoc_var_annotation_correct_order' => true,
             'return_assignment' => true,
-            'short_echo_tag' => ['format' => 'long-echo'],
+            'short_echo_tag' => ['format' => 'long'],
             'simple_to_complex_string_variable' => true,
             'single_line_comment_style' => true,
         ],
