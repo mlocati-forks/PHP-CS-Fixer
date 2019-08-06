@@ -48,21 +48,11 @@ final class ShortEchoTagFixer extends AbstractFixer implements ConfigurationDefi
     /** @internal */
     const LONG_FUNCTION_PRINT = 'print';
 
-    /**
-     * Array of supported formats in configuration.
-     *
-     * @var string[]
-     */
     private $supportedFormatOptions = [
         self::FORMAT_SHORT,
         self::FORMAT_LONG,
     ];
 
-    /**
-     * Array of supported long functions in configuration.
-     *
-     * @var string[]
-     */
     private $supportedLongFunctionOptions = [
         self::LONG_FUNCTION_ECHO,
         self::LONG_FUNCTION_PRINT,
