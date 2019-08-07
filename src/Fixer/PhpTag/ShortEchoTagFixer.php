@@ -31,10 +31,10 @@ final class ShortEchoTagFixer extends AbstractFixer implements ConfigurationDefi
     const OPTION_FORMAT = 'format';
 
     /** @internal */
-    const OPTION_SHORT_ALWAYS = 'short-always';
+    const OPTION_SHORT_ALWAYS = 'short_always';
 
     /** @internal */
-    const OPTION_LONG_FUNCTION = 'long-function';
+    const OPTION_LONG_FUNCTION = 'long_function';
 
     /** @internal */
     const FORMAT_SHORT = 'short';

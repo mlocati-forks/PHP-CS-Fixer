@@ -32,7 +32,7 @@ final class ShortEchoTagFixerTest extends AbstractFixerTestCase
      */
     public function testLongToShortFormat($expected, $input = null, $shortAlways = false)
     {
-        $this->fixer->configure(['format' => 'short', 'short-always' => $shortAlways]);
+        $this->fixer->configure(['format' => 'short', 'short_always' => $shortAlways]);
         $this->doTest($expected, $input);
     }
 
@@ -64,7 +64,7 @@ final class ShortEchoTagFixerTest extends AbstractFixerTestCase
         if (\PHP_VERSION_ID < 50400 && !ini_get('short_open_tag')) {
             static::markTestSkipped('The short_open_tag option is required to be enabled with PHP < 5.4.');
         }
-        $this->fixer->configure(['format' => 'long', 'long-function' => $function]);
+        $this->fixer->configure(['format' => 'long', 'long_function' => $function]);
         $this->doTest($expected, $input);
     }
 

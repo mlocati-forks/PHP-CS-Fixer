@@ -1721,9 +1721,9 @@ Choose from the list of available rules:
 
   - ``format`` (``'long'``, ``'short'``): how the fixer should process short/long echo
     tags; defaults to ``'short'``
-  - ``long-function`` (``'echo'``, ``'print'``): the function to be used to expand the
+  - ``long_function`` (``'echo'``, ``'print'``): the function to be used to expand the
     short echo tags; defaults to ``'echo'``
-  - ``short-always`` (``bool``): always render short-echo tags even in case of
+  - ``short_always`` (``bool``): always render short-echo tags even in case of
     complex code; defaults to ``false``
 
 * **short_scalar_cast** [@Symfony, @PhpCsFixer]
