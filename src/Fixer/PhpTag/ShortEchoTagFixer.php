@@ -159,7 +159,8 @@ EOT
             }
             next($found);
             $endRange = key($found);
-            $tokens->overrideRange($startRange, $endRange, [new Token([\T_OPEN_TAG_WITH_ECHO, '<?='])]);
+            $newTokens = $this->buildLongToShortTokens($tokens, $startRange, $endRange);
+            $tokens->overrideRange($startRange, $endRange, $newTokens);
         }
     }
 
@@ -201,5 +202,40 @@ EOT
         }
 
         return false;
+    }
+
+    /**
+     * Builds the list of tokens that replace a long echo sequence.
+     *
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int                          $openTagIndex
+     * @param int                          $echoTagIndex
+     *
+     * @return \PhpCsFixer\Tokenizer\Token[]
+     */
+    private function buildLongToShortTokens(Tokens $tokens, $openTagIndex, $echoTagIndex)
+    {
+        $result = [new Token([\T_OPEN_TAG_WITH_ECHO, '<?='])];
+
+        // Skip to the first non-whitespace token between $openTagIndex and $echoTagIndex
+        $start = $openTagIndex + 1;
+        while ($start < $echoTagIndex && $tokens[$start]->isWhitespace()) {
+            ++$start;
+        }
+        if ($start >= $echoTagIndex) {
+            // No non-whitespace tokens between $openTagIndex and $echoTagIndex
+            return $result;
+        }
+        // Find the last non-whitespace index before $echoTagIndex
+        $end = $echoTagIndex - 1;
+        while ($tokens[$end]->isWhitespace()) {
+            --$end;
+        }
+        // Copy the non-whitespace tokens between $openTagIndex and $echoTagIndex
+        for ($index = $start; $index <= $end; ++$index) {
+            $result[] = clone $tokens[$index];
+        }
+
+        return $result;
     }
 }

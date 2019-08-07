@@ -49,6 +49,7 @@ final class ShortEchoTagFixerTest extends AbstractFixerTestCase
             ['<?= \'Foo\'; ?> <?= \'Bar\'; ?>', '<?php print \'Foo\'; ?> <?php echo \'Bar\'; ?>'],
             ['<?php echo \'Foo\'; someThingElse();'],
             ['<?= \'Foo\'; someThingElse();', '<?php echo \'Foo\'; someThingElse();', true],
+            ['<?=/*this */ /** should be in the result*/ \'Foo\';', '<?php /*this */ /** should be in the result*/ echo \'Foo\';'],
         ];
     }
 
