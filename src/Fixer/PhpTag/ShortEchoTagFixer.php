@@ -66,6 +66,7 @@ final class ShortEchoTagFixer extends AbstractFixer implements ConfigurationDefi
         $sample = <<<'EOT'
 <?=1?>
 <?php print '2' . '3'; ?>
+<?php /* comment */ echo '2' . '3'; ?>
 <?php print '2' . '3'; someFunction(); ?>
 
 EOT
