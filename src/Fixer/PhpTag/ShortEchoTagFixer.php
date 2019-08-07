@@ -49,8 +49,8 @@ final class ShortEchoTagFixer extends AbstractFixer implements ConfigurationDefi
     const LONG_FUNCTION_PRINT = 'print';
 
     private $supportedFormatOptions = [
-        self::FORMAT_SHORT,
         self::FORMAT_LONG,
+        self::FORMAT_SHORT,
     ];
 
     private $supportedLongFunctionOptions = [
@@ -112,7 +112,7 @@ EOT
         return new FixerConfigurationResolver([
             (new FixerOptionBuilder(self::OPTION_FORMAT, 'How the fixer should process short/long echo tags'))
                 ->setAllowedValues($this->supportedFormatOptions)
-                ->setDefault(self::FORMAT_SHORT)
+                ->setDefault(self::FORMAT_LONG)
                 ->getOption(),
             (new FixerOptionBuilder(self::OPTION_LONG_FUNCTION, 'The function to be used to expand the short echo tags'))
                 ->setAllowedValues($this->supportedLongFunctionOptions)
