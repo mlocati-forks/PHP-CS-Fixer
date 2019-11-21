@@ -131,13 +131,13 @@ EOT
     protected function applyFix(SplFileInfo $file, Tokens $tokens)
     {
         if (self::FORMAT_SHORT === $this->configuration[self::OPTION_FORMAT]) {
-            $this->longToShort($file, $tokens);
+            $this->longToShort($tokens);
         } else {
-            $this->shortToLong($file, $tokens);
+            $this->shortToLong($tokens);
         }
     }
 
-    private function longToShort(SplFileInfo $file, Tokens $tokens)
+    private function longToShort(Tokens $tokens)
     {
         $offset = 0;
         for (;;) {
@@ -165,7 +165,7 @@ EOT
         }
     }
 
-    private function shortToLong(SplFileInfo $file, Tokens $tokens)
+    private function shortToLong(Tokens $tokens)
     {
         if (self::LONG_FUNCTION_PRINT === $this->configuration[self::OPTION_LONG_FUNCTION]) {
             $echoToken = [\T_PRINT, 'print'];
