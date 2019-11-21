@@ -187,6 +187,22 @@ EOT
         }
     }
 
+    /**
+     * Check if $tokens, starting at $index, contains "complex code", that is, the content
+     * of the echo tag contains more than a simple "echo something".
+     *
+     * This is done by a very quick test: if the tag contains non-whitespace tokens after
+     * a semicolon, we consider it as "complex". 
+     *
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int $index
+     * 
+     * @example `<?php echo 1 ?>` is false (not complex)
+     * @example `<?php echo 'hello' . 'world'; ?>` is false (not "complex")
+     * @example `<?php echo 2; $set = 3 ?>` is true ("complex")
+     *
+     * @return bool
+     */
     private function isComplexCode(Tokens $tokens, $index)
     {
         $semicolonFound = false;
