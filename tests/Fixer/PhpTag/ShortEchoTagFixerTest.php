@@ -69,6 +69,10 @@ final class ShortEchoTagFixerTest extends AbstractFixerTestCase
     public function provideShortToLongFormatCases()
     {
         $cases = [
+            ['<?php <fn> 1;', '<?= 1;'],
+            ['<?php <fn> 1;', '<?=1;'],
+            ['<?php <fn> /**/1;', '<?=/**/1;'],
+            ['<?php <fn> /**/ 1;', '<?=/**/ 1;'],
             ['<?php <fn> \'Foo\';', '<?= \'Foo\';'],
             ['<?php <fn> \'Foo\'; ?> PLAIN TEXT', '<?= \'Foo\'; ?> PLAIN TEXT'],
             ['PLAIN TEXT<?php <fn> \'Foo\'; ?>', 'PLAIN TEXT<?= \'Foo\'; ?>'],

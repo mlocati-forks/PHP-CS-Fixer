@@ -170,18 +170,18 @@ EOT
         } else {
             $echoToken = [\T_ECHO, 'echo'];
         }
-        $offset = $tokens->count() - 1;
+        $index = -1;
         for (;;) {
-            $found = $tokens->getPrevTokenOfKind($offset, [[\T_OPEN_TAG_WITH_ECHO]]);
-            if (null === $found) {
-                break;
+            $index = $tokens->getNextTokenOfKind($index, [[\T_OPEN_TAG_WITH_ECHO]]);
+            if ($index === null) {
+                return;
             }
-            $offset = $found - 1;
             $replace = [new Token([\T_OPEN_TAG, '<?php ']), new Token($echoToken)];
-            if (!$tokens[$found + 1]->isWhitespace()) {
+            if (!$tokens[$index + 1]->isWhitespace()) {
                 $replace[] = new Token([\T_WHITESPACE, ' ']);
             }
-            $tokens->overrideRange($found, $found, $replace);
+            $tokens->overrideRange($index, $index, $replace);
+            $index++;
         }
     }
 
