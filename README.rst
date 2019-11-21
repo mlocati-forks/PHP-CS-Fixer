@@ -1807,8 +1807,8 @@ Choose from the list of available rules:
 
   Configuration options:
 
-  - ``format`` (``'long'``, ``'short'``): how the fixer should process short/long echo
-    tags; defaults to ``'long'``
+  - ``format`` (``'long'``, ``'short'``): the desired language construct; defaults to
+    ``'long'``
   - ``long_function`` (``'echo'``, ``'print'``): the function to be used to expand the
     short echo tags; defaults to ``'echo'``
   - ``short_always`` (``bool``): always render short-echo tags even in case of

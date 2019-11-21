@@ -110,7 +110,7 @@ EOT
     protected function createConfigurationDefinition()
     {
         return new FixerConfigurationResolver([
-            (new FixerOptionBuilder(self::OPTION_FORMAT, 'How the fixer should process short/long echo tags'))
+            (new FixerOptionBuilder(self::OPTION_FORMAT, 'The desired language construct.'))
                 ->setAllowedValues($this->supportedFormatOptions)
                 ->setDefault(self::FORMAT_LONG)
                 ->getOption(),
