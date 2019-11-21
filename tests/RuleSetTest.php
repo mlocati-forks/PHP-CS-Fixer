@@ -209,13 +209,13 @@ final class RuleSetTest extends TestCase
                 'blank_line_after_namespace' => true,
                 'braces' => true,
                 'class_definition' => true,
+                'constant_case' => true,
                 'elseif' => true,
                 'encoding' => true,
                 'full_opening_tag' => true,
                 'function_declaration' => true,
                 'indentation_type' => true,
                 'line_ending' => true,
-                'lowercase_constants' => true,
                 'lowercase_keywords' => true,
                 'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
                 'no_break_comment' => true,
@@ -250,12 +250,12 @@ final class RuleSetTest extends TestCase
                 'blank_line_after_namespace' => true,
                 'braces' => true,
                 'class_definition' => true,
+                'constant_case' => true,
                 'elseif' => true,
                 'encoding' => true,
                 'function_declaration' => true,
                 'indentation_type' => true,
                 'line_ending' => true,
-                'lowercase_constants' => true,
                 'lowercase_keywords' => true,
                 'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
                 'no_break_comment' => true,
@@ -320,8 +320,7 @@ final class RuleSetTest extends TestCase
     }
 
     /**
-     * @param array $set
-     * @param bool  $safe
+     * @param bool $safe
      *
      * @dataProvider provideSafeSetCases
      */
@@ -400,9 +399,6 @@ final class RuleSetTest extends TestCase
     }
 
     /**
-     * @param array $expected
-     * @param array $rules
-     *
      * @dataProvider provideResolveRulesCases
      */
     public function testResolveRules(array $expected, array $rules)
@@ -595,8 +591,6 @@ final class RuleSetTest extends TestCase
      * Sorts an array of rule set definitions recursively.
      *
      * Sometimes keys are all string, sometimes they are integers - we need to account for that.
-     *
-     * @param array $data
      */
     private function sort(array &$data)
     {
@@ -616,8 +610,6 @@ final class RuleSetTest extends TestCase
     }
 
     /**
-     * @param array $values
-     *
      * @return bool
      */
     private function allInteger(array $values)

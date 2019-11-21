@@ -89,6 +89,7 @@ final class FixerFactoryTest extends TestCase
             [$fixers['escape_implicit_backslashes'], $fixers['heredoc_to_nowdoc']],
             [$fixers['escape_implicit_backslashes'], $fixers['single_quote']],
             [$fixers['explicit_string_variable'], $fixers['simple_to_complex_string_variable']],
+            [$fixers['final_internal_class'], $fixers['final_static_access']],
             [$fixers['final_internal_class'], $fixers['self_static_accessor']],
             [$fixers['fully_qualified_strict_types'], $fixers['no_superfluous_phpdoc_tags']],
             [$fixers['function_to_constant'], $fixers['native_function_casing']],
@@ -100,6 +101,9 @@ final class FixerFactoryTest extends TestCase
             [$fixers['general_phpdoc_annotation_remove'], $fixers['phpdoc_separation']],
             [$fixers['general_phpdoc_annotation_remove'], $fixers['phpdoc_trim']],
             [$fixers['general_phpdoc_annotation_remove'], $fixers['no_empty_phpdoc']],
+            [$fixers['general_phpdoc_annotation_remove'], $fixers['phpdoc_line_span']],
+            [$fixers['global_namespace_import'], $fixers['no_unused_imports']],
+            [$fixers['global_namespace_import'], $fixers['ordered_imports']],
             [$fixers['indentation_type'], $fixers['phpdoc_indent']],
             [$fixers['implode_call'], $fixers['method_argument_space']],
             [$fixers['is_null'], $fixers['yoda_style']],
@@ -136,6 +140,8 @@ final class FixerFactoryTest extends TestCase
             [$fixers['no_multiline_whitespace_around_double_arrow'], $fixers['binary_operator_spaces']],
             [$fixers['no_multiline_whitespace_around_double_arrow'], $fixers['trailing_comma_in_multiline_array']],
             [$fixers['multiline_whitespace_before_semicolons'], $fixers['space_after_semicolon']],
+            [$fixers['native_constant_invocation'], $fixers['global_namespace_import']],
+            [$fixers['native_function_invocation'], $fixers['global_namespace_import']],
             [$fixers['no_php4_constructor'], $fixers['ordered_class_elements']],
             [$fixers['no_short_bool_cast'], $fixers['cast_spaces']],
             [$fixers['no_short_echo_tag'], $fixers['no_mixed_echo_print']],
@@ -146,6 +152,7 @@ final class FixerFactoryTest extends TestCase
             [$fixers['no_unneeded_control_parentheses'], $fixers['no_trailing_whitespace']],
             [$fixers['no_unneeded_curly_braces'], $fixers['no_useless_else']],
             [$fixers['no_unneeded_curly_braces'], $fixers['no_useless_return']],
+            [$fixers['nullable_type_declaration_for_default_null_value'], $fixers['no_unreachable_default_argument_value']],
             [$fixers['no_unset_on_property'], $fixers['combine_consecutive_unsets']],
             [$fixers['no_unused_imports'], $fixers['blank_line_after_namespace']],
             [$fixers['no_unused_imports'], $fixers['no_extra_blank_lines']],
@@ -171,6 +178,7 @@ final class FixerFactoryTest extends TestCase
             [$fixers['php_unit_no_expectation_annotation'], $fixers['no_empty_phpdoc']],
             [$fixers['php_unit_no_expectation_annotation'], $fixers['php_unit_expectation']],
             [$fixers['php_unit_dedicate_assert'], $fixers['php_unit_dedicate_assert_internal_type']],
+            [$fixers['php_unit_test_case_static_method_calls'], $fixers['final_static_access']],
             [$fixers['phpdoc_add_missing_param_annotation'], $fixers['no_empty_phpdoc']],
             [$fixers['phpdoc_add_missing_param_annotation'], $fixers['phpdoc_align']],
             [$fixers['phpdoc_add_missing_param_annotation'], $fixers['phpdoc_order']],
@@ -196,9 +204,11 @@ final class FixerFactoryTest extends TestCase
             [$fixers['phpdoc_scalar'], $fixers['phpdoc_to_return_type']],
             [$fixers['phpdoc_to_comment'], $fixers['no_empty_comment']],
             [$fixers['phpdoc_to_comment'], $fixers['phpdoc_no_useless_inheritdoc']],
+            [$fixers['phpdoc_to_param_type'], $fixers['no_superfluous_phpdoc_tags']],
             [$fixers['phpdoc_to_return_type'], $fixers['fully_qualified_strict_types']],
             [$fixers['phpdoc_to_return_type'], $fixers['no_superfluous_phpdoc_tags']],
             [$fixers['phpdoc_to_return_type'], $fixers['return_type_declaration']],
+            [$fixers['phpdoc_types'], $fixers['phpdoc_to_return_type']],
             [$fixers['pow_to_exponentiation'], $fixers['binary_operator_spaces']],
             [$fixers['pow_to_exponentiation'], $fixers['method_argument_space']],
             [$fixers['pow_to_exponentiation'], $fixers['native_function_casing']],
@@ -212,6 +222,7 @@ final class FixerFactoryTest extends TestCase
             [$fixers['single_import_per_statement'], $fixers['no_singleline_whitespace_before_semicolons']],
             [$fixers['single_import_per_statement'], $fixers['no_unused_imports']],
             [$fixers['single_import_per_statement'], $fixers['space_after_semicolon']],
+            [$fixers['single_line_throw'], $fixers['concat_space']],
             [$fixers['single_trait_insert_per_statement'], $fixers['braces']],
             [$fixers['single_trait_insert_per_statement'], $fixers['space_after_semicolon']],
             [$fixers['standardize_increment'], $fixers['increment_style']],
@@ -224,6 +235,7 @@ final class FixerFactoryTest extends TestCase
             [$fixers['php_unit_test_annotation'], $fixers['no_empty_phpdoc']],
             [$fixers['php_unit_test_annotation'], $fixers['php_unit_method_casing']],
             [$fixers['php_unit_test_annotation'], $fixers['phpdoc_trim']],
+            [$fixers['php_unit_test_case_static_method_calls'], $fixers['self_static_accessor']],
             [$fixers['no_alternative_syntax'], $fixers['braces']],
             [$fixers['no_alternative_syntax'], $fixers['elseif']],
         ];
@@ -409,9 +421,6 @@ final class FixerFactoryTest extends TestCase
     }
 
     /**
-     * @param FixerInterface $first
-     * @param FixerInterface $second
-     *
      * @return string
      */
     private function generateIntegrationTestName(FixerInterface $first, FixerInterface $second)
@@ -420,9 +429,6 @@ final class FixerFactoryTest extends TestCase
     }
 
     /**
-     * @param FixerInterface $first
-     * @param FixerInterface $second
-     *
      * @return bool
      */
     private function doesIntegrationTestExist(FixerInterface $first, FixerInterface $second)

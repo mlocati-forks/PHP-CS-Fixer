@@ -41,7 +41,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class HelpCommand extends BaseHelpCommand
 {
-    const COMMAND_NAME = 'help';
+    protected static $defaultName = 'help';
 
     /**
      * Returns help-copy suitable for console output.
@@ -273,7 +273,7 @@ Exit code is built using following bit flags:
 * 32 - Configuration error of a Fixer.
 * 64 - Exception raised within the application.
 
-(Applies to exit code of the `fix` command only)
+(Applies to exit code of the ``fix`` command only)
 EOF
         ;
 
@@ -333,8 +333,6 @@ EOF
 
     /**
      * Returns the allowed values of the given option that can be converted to a string.
-     *
-     * @param FixerOptionInterface $option
      *
      * @return null|array
      */

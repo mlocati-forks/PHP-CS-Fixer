@@ -506,12 +506,15 @@ $bar = null;
 EOF
                 ,
             ],
-            'property_name' => [
+            'property name, method name, static method call, static property' => [
                 <<<'EOF'
 <?php
 
 
 $foo->bar = null;
+$foo->bar();
+$foo::bar();
+$foo::bar;
 EOF
                 ,
                 <<<'EOF'
@@ -520,6 +523,9 @@ EOF
 use Foo\Bar;
 
 $foo->bar = null;
+$foo->bar();
+$foo::bar();
+$foo::bar;
 EOF
                 ,
             ],
@@ -1038,6 +1044,47 @@ class UsesTraits
     use MyTrait;
 }
 
+EOF
+            ],
+            'imported_name_is_part_of_namespace' => [
+                <<<'EOF'
+<?php
+
+namespace App\Foo;
+
+
+class Baz
+{
+}
+
+EOF
+                ,
+                <<<'EOF'
+<?php
+
+namespace App\Foo;
+
+use Foo\Bar\App;
+
+class Baz
+{
+}
+
+EOF
+            ],
+            'imported_name_is_part_of_namespace with closing tag' => [
+                <<<'EOF'
+<?php
+    namespace A\B {?>
+<?php
+    require_once __DIR__.'/test2.php' ?>
+<?php
+    use X\Z\Y
+?>
+<?php
+    $y = new Y() ?>
+<?php
+    var_dump($y);}
 EOF
             ],
         ];

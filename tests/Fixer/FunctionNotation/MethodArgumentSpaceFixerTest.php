@@ -28,7 +28,6 @@ final class MethodArgumentSpaceFixerTest extends AbstractFixerTestCase
     /**
      * @param string      $expected
      * @param null|string $input
-     * @param array       $configuration
      *
      * @dataProvider provideFixCases
      */
@@ -61,7 +60,6 @@ final class MethodArgumentSpaceFixerTest extends AbstractFixerTestCase
     /**
      * @param string      $expected
      * @param null|string $input
-     * @param array       $configuration
      *
      * @dataProvider provideFixCases
      */
@@ -333,13 +331,40 @@ EOTXTb
     );
 ",
             ],
-            'with_random_comments' => [
+            'with_random_comments on_multiline:ignore' => [
                 '<?php xyz#
  (#
 ""#
 ,#
 $a#
 );',
+                null,
+                ['on_multiline' => 'ignore'],
+            ],
+            'with_random_comments on_multiline:ensure_single_line' => [
+                '<?php xyz#
+ (#
+""#
+,#
+$a#
+);',
+                null,
+                ['on_multiline' => 'ensure_single_line'],
+            ],
+            'with_random_comments on_multiline:ensure_fully_multiline' => [
+                '<?php xyz#
+ (#
+""#
+,#
+$a#
+ );',
+                '<?php xyz#
+ (#
+""#
+,#
+$a#
+);',
+                ['on_multiline' => 'ensure_fully_multiline'],
             ],
             'keep_multiple_spaces_after_comma_with_newlines' => [
                 "<?php xyz(\$a=10,\n\$b=20);",
@@ -992,6 +1017,39 @@ functionCall(
             [
                 '<?php foo(1, 2, 3, );',
                 '<?php foo(1,2,3,);',
+            ],
+        ];
+    }
+
+    /**
+     * @param string      $expected
+     * @param null|string $input
+     *
+     * @dataProvider provideFix74Cases
+     * @requires PHP 7.4
+     */
+    public function testFix74($expected, $input = null, array $config = [])
+    {
+        $this->fixer->configure($config);
+        $this->doTest($expected, $input);
+    }
+
+    public function provideFix74Cases()
+    {
+        return [
+            [
+                '<?php
+$fn = fn(
+    $test1,
+    $test2
+) => null;',
+                '<?php
+$fn = fn(
+    $test1, $test2
+) => null;',
+                [
+                    'on_multiline' => 'ensure_fully_multiline',
+                ],
             ],
         ];
     }

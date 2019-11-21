@@ -33,23 +33,22 @@ class FooBar
     /**
      * Foo.
      *
-     * @param string      $dummy   Some argument description
-     * @param array       $options
-     * @param string|null $data    Foo
+     * @param string      $dummy Some argument description
+     * @param string|null $data  Foo
      *
      * @return string|null Transformed input
      *
      * @throws \RuntimeException
      */
-    private function transformText($dummy, array $options = array(), $data = null)
+    private function transformText($dummy, array $options = [], $data = null)
     {
         $fnc = function () { return true; };
 
         $mergedOptions = array_merge(
-            array(
+            [
                 'some_default' => 'values',
                 'another_default' => 'more values',
-            ),
+            ],
             $options
         );
 

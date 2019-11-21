@@ -62,6 +62,8 @@ final class PhpdocAlignFixer extends AbstractFixer implements ConfigurationDefin
     private static $alignableTags = [
         'param',
         'property',
+        'property-read',
+        'property-write',
         'return',
         'throws',
         'type',
@@ -216,9 +218,6 @@ EOF;
         return new FixerConfigurationResolver([$tags->getOption(), $align->getOption()]);
     }
 
-    /**
-     * @param DocBlock $docBlock
-     */
     private function fixDocBlock(DocBlock $docBlock)
     {
         $lineEnding = $this->whitespacesConfig->getLineEnding();

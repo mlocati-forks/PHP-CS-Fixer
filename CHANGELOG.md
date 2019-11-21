@@ -3,6 +3,115 @@ CHANGELOG for PHP CS Fixer
 
 This file contains changelogs for stable releases only.
 
+Changelog for v2.16.0
+---------------------
+
+* feature #3810 PhpdocLineSpanFixer - Introduction (BackEndTea)
+* feature #3928 Add FinalPublicMethodForAbstractClassFixer (Slamdunk)
+* feature #4000 FinalStaticAccessFixer - Introduction (ntzm)
+* feature #4275 Issue #4274: Let lowercase_constants directive to be configurable. (drupol)
+* feature #4355 GlobalNamespaceImportFixer - Introduction (gharlan)
+* feature #4358 SelfStaticAccessorFixer - Introduction (SpacePossum)
+* feature #4385 CommentToPhpdocFixer - allow to ignore tags (kubawerlos)
+* feature #4401 Add NullableTypeDeclarationForDefaultNullValueFixer (HypeMC)
+* feature #4452 Add SingleLineThrowFixer (kubawerlos)
+* feature #4500 NoSuperfluousPhpdocTags - Add remove_inheritdoc option (julienfalque)
+* feature #4505 NoSuperfluousPhpdocTagsFixer - allow params that aren't on the signature (azjezz)
+* feature #4531 PhpdocAlignFixer - add "property-read" and "property-write" to allowed tags (kubawerlos)
+* feature #4583 Phpdoc to param type fixer rebase (jg-development)
+* minor #4033 Raise deprecation warnings on usage of deprecated aliases (ntzm)
+* minor #4423 DX: update branch alias (keradus)
+* minor #4537 SelfStaticAccessor - extend itests (keradus)
+* minor #4607 Configure no_superfluous_phpdoc_tags for Symfony (keradus)
+* minor #4618 DX: fix usage of deprecated options (0x450x6c)
+* minor #4619 Fix PHP 7.3 strict mode warnings (keradus)
+* minor #4621 Add single_line_throw to Symfony ruleset (keradus)
+
+Changelog for v2.15.4
+---------------------
+
+* bug #4183 IndentationTypeFixer - fix handling 2 spaces indent (kubawerlos)
+* bug #4406 NoSuperfluousElseifFixer - fix invalid escape sequence in character class (remicollet, SpacePossum)
+* bug #4416 NoUnusedImports - Fix imports detected as used in namespaces (julienfalque, SpacePossum)
+* bug #4518 PhpUnitNoExpectationAnnotationFixer - fix handling expect empty exception message (ktomk)
+* bug #4548 HeredocIndentationFixer - remove whitespace in empty lines (gharlan)
+* bug #4556 ClassKeywordRemoveFixer - fix for self,static and parent keywords (kubawerlos)
+* bug #4572 TokensAnalyzer - handle nested anonymous classes (SpacePossum)
+* bug #4573 CombineConsecutiveIssetsFixer - fix stop based on precedence (SpacePossum)
+* bug #4577 Fix command exit code on lint error after fixing fix. (SpacePossum)
+* bug #4581 FunctionsAnalyzer: fix for comment in type (kubawerlos)
+* bug #4586 BracesFixer - handle dynamic static method call (SpacePossum)
+* bug #4594 Braces - fix both single line comment styles (SpacePossum)
+* bug #4609 PhpdocTypesOrderFixer - Prevent unexpected default value change (laurent35240)
+* minor #4458 Add PHPStan (julienfalque)
+* minor #4479 IncludeFixer - remove braces when the statement is wrapped in block (kubawerlos)
+* minor #4490 Allow running if installed as project specific (ticktackk)
+* minor #4517 Verify PCRE pattern before use (ktomk)
+* minor #4521 Remove superfluous leading backslash, closes 4520 (ktomk)
+* minor #4532 DX: ensure data providers are used (kubawerlos)
+* minor #4534 Redo PHP7.4 - Add "str_split" => "mb_str_split" mapping (keradus, Slamdunk)
+* minor #4536 DX: use PHIVE for dev tools (keradus)
+* minor #4538 Docs: update Cookbook (keradus)
+* minor #4541 Enhancement: Use default name property to configure command names (localheinz)
+* minor #4546 DX: removing unnecessary variable initialization (kubawerlos)
+* minor #4549 DX: use ::class whenever possible (keradus, kubawerlos)
+* minor #4550 DX: travis_retry for dev-tools install (ktomk, keradus)
+* minor #4559 Allow 7.4snapshot to fail due to a bug on it (kubawerlos)
+* minor #4563 GitlabReporter - fix report output (mjanser)
+* minor #4564 Move readme-update command to Section 3 (iwasherefirst2)
+* minor #4566 Update symfony ruleset (gharlan)
+* minor #4570 Command::execute() should always return an integer (derrabus)
+* minor #4580 Add suport for true/false return type hints. (SpacePossum)
+* minor #4584 Increase PHPStan level to 1 (julienfalque)
+* minor #4585 Fix deprecation notices (julienfalque)
+* minor #4587 Output details - Explain why a file was skipped (SpacePossum)
+* minor #4588 Fix STDIN test when path is one level deep (julienfalque)
+* minor #4589 PhpdocToReturnType - Add support for Foo[][] (SpacePossum)
+* minor #4593 Ensure compatibility with PHP 7.4 typed properties (julienfalque)
+* minor #4595 Import cannot be used after `::` so can be removed (SpacePossum)
+* minor #4596 Ensure compatibility with PHP 7.4 numeric literal separator (julienfalque)
+* minor #4597 Fix PHP 7.4 deprecation notices (julienfalque)
+* minor #4600 Ensure compatibility with PHP 7.4 arrow functions (julienfalque)
+* minor #4602 Ensure compatibility with PHP 7.4 spread operator in array expression (julienfalque)
+* minor #4603 Ensure compatibility with PHP 7.4 null coalescing assignment operator (julienfalque)
+* minor #4606 Configure no_superfluous_phpdoc_tags for Symfony (keradus)
+* minor #4610 Travis CI - Update known files list (julienfalque)
+* minor #4615 Remove workaround for dev-tools install reg. Phive (ktomk)
+
+Changelog for v2.15.3
+---------------------
+
+* bug #4533 Revert PHP7.4 - Add "str_split" => "mb_str_split" mapping (keradus)
+* minor #4264 DX: AutoReview - ensure Travis handle all needed PHP versions (keradus)
+* minor #4524 MethodArgumentSpaceFixerTest - make explicit configuration to prevent fail on configuration change (keradus)
+
+Changelog for v2.15.2
+---------------------
+
+* bug #4132 BlankLineAfterNamespaceFixer - do not remove indent, handle comments (kubawerlos)
+* bug #4384 MethodArgumentSpaceFixer - fix for on_multiline:ensure_fully_multiline with trailing comma in function call (kubawerlos)
+* bug #4404 FileLintingIterator - fix current value on end/invalid (SpacePossum)
+* bug #4421 FunctionTypehintSpaceFixer - Ensure single space between type declaration and parameter (localheinz)
+* bug #4436 MethodArgumentSpaceFixer - handle misplaced ) (keradus)
+* bug #4439 NoLeadingImportSlashFixer - Add space if needed (SpacePossum)
+* bug #4440 SimpleToComplexStringVariableFixer - Fix $ bug (dmvdbrugge)
+* bug #4453 Fix preg_match error on 7.4snapshot (kubawerlos)
+* bug #4461 IsNullFixer - fix null coalescing operator handling (linniksa)
+* bug #4467 ToolInfo - fix access to reference without checking existence (black-silence)
+* bug #4472 Fix non-static closure unbinding this on PHP 7.4 (kelunik)
+* minor #3726 Use Box 3 to build the PHAR (theofidry, keradus)
+* minor #4412 PHP 7.4 - Tests for support (SpacePossum)
+* minor #4431 DX: test that default config is not passed in RuleSet (kubawerlos)
+* minor #4433 DX: test to ensure @PHPUnitMigration rule sets are correctly defined (kubawerlos)
+* minor #4445 DX: static call of markTestSkippedOrFail (kubawerlos)
+* minor #4463 Add apostrophe to possessive "team's" (ChandlerSwift)
+* minor #4471 ReadmeCommandTest - use CommandTester (kubawerlos)
+* minor #4477 DX: control names of public methods in test's classes (kubawerlos)
+* minor #4483 NewWithBracesFixer - Fix object operator and curly brace open cases (SpacePossum)
+* minor #4484 fix typos in README (Sven Ludwig)
+* minor #4494 DX: Fix shell script syntax in order to fix Travis builds (drupol)
+* minor #4516 DX: Lock binary SCA tools versions (keradus)
+
 Changelog for v2.15.1
 ---------------------
 
@@ -38,6 +147,39 @@ Changelog for v2.15.0
 * minor #4386 Add PhpUnitMockShortWillReturnFixer to @Symfony:risky rule set (kubawerlos)
 * minor #4398 New ruleset "@PHP73Migration" (gharlan)
 * minor #4399 Fix 2.15 line (keradus)
+
+Changelog for v2.14.6
+---------------------
+
+* bug #4533 Revert PHP7.4 - Add "str_split" => "mb_str_split" mapping (keradus)
+* minor #4264 DX: AutoReview - ensure Travis handle all needed PHP versions (keradus)
+* minor #4524 MethodArgumentSpaceFixerTest - make explicit configuration to prevent fail on configuration change (keradus)
+
+Changelog for v2.14.5
+---------------------
+
+* bug #4132 BlankLineAfterNamespaceFixer - do not remove indent, handle comments (kubawerlos)
+* bug #4384 MethodArgumentSpaceFixer - fix for on_multiline:ensure_fully_multiline with trailing comma in function call (kubawerlos)
+* bug #4404 FileLintingIterator - fix current value on end/invalid (SpacePossum)
+* bug #4421 FunctionTypehintSpaceFixer - Ensure single space between type declaration and parameter (localheinz)
+* bug #4436 MethodArgumentSpaceFixer - handle misplaced ) (keradus)
+* bug #4439 NoLeadingImportSlashFixer - Add space if needed (SpacePossum)
+* bug #4453 Fix preg_match error on 7.4snapshot (kubawerlos)
+* bug #4461 IsNullFixer - fix null coalescing operator handling (linniksa)
+* bug #4467 ToolInfo - fix access to reference without checking existence (black-silence)
+* bug #4472 Fix non-static closure unbinding this on PHP 7.4 (kelunik)
+* minor #3726 Use Box 3 to build the PHAR (theofidry, keradus)
+* minor #4412 PHP 7.4 - Tests for support (SpacePossum)
+* minor #4431 DX: test that default config is not passed in RuleSet (kubawerlos)
+* minor #4433 DX: test to ensure @PHPUnitMigration rule sets are correctly defined (kubawerlos)
+* minor #4445 DX: static call of markTestSkippedOrFail (kubawerlos)
+* minor #4463 Add apostrophe to possessive "team's" (ChandlerSwift)
+* minor #4471 ReadmeCommandTest - use CommandTester (kubawerlos)
+* minor #4477 DX: control names of public methods in test's classes (kubawerlos)
+* minor #4483 NewWithBracesFixer - Fix object operator and curly brace open cases (SpacePossum)
+* minor #4484 fix typos in README (Sven Ludwig)
+* minor #4494 DX: Fix shell script syntax in order to fix Travis builds (drupol)
+* minor #4516 DX: Lock binary SCA tools versions (keradus)
 
 Changelog for v2.14.4
 ---------------------
@@ -263,6 +405,39 @@ Changelog for v2.13.0
 * minor #3813 PhpUnitDedicateAssertFixer - fix "sizeOf" same as "count". (SpacePossum)
 * minor #3873 Add the native_function_invocation fixer in the Symfony:risky ruleset (stof)
 * minor #3979 DX: enable php_unit_method_casing (keradus)
+
+Changelog for v2.12.12
+----------------------
+
+* bug #4533 Revert PHP7.4 - Add "str_split" => "mb_str_split" mapping (keradus)
+* minor #4264 DX: AutoReview - ensure Travis handle all needed PHP versions (keradus)
+* minor #4524 MethodArgumentSpaceFixerTest - make explicit configuration to prevent fail on configuration change (keradus)
+
+Changelog for v2.12.11
+----------------------
+
+* bug #4132 BlankLineAfterNamespaceFixer - do not remove indent, handle comments (kubawerlos)
+* bug #4384 MethodArgumentSpaceFixer - fix for on_multiline:ensure_fully_multiline with trailing comma in function call (kubawerlos)
+* bug #4404 FileLintingIterator - fix current value on end/invalid (SpacePossum)
+* bug #4421 FunctionTypehintSpaceFixer - Ensure single space between type declaration and parameter (localheinz)
+* bug #4436 MethodArgumentSpaceFixer - handle misplaced ) (keradus)
+* bug #4439 NoLeadingImportSlashFixer - Add space if needed (SpacePossum)
+* bug #4453 Fix preg_match error on 7.4snapshot (kubawerlos)
+* bug #4461 IsNullFixer - fix null coalescing operator handling (linniksa)
+* bug #4467 ToolInfo - fix access to reference without checking existence (black-silence)
+* bug #4472 Fix non-static closure unbinding this on PHP 7.4 (kelunik)
+* minor #3726 Use Box 3 to build the PHAR (theofidry, keradus)
+* minor #4412 PHP 7.4 - Tests for support (SpacePossum)
+* minor #4431 DX: test that default config is not passed in RuleSet (kubawerlos)
+* minor #4433 DX: test to ensure @PHPUnitMigration rule sets are correctly defined (kubawerlos)
+* minor #4445 DX: static call of markTestSkippedOrFail (kubawerlos)
+* minor #4463 Add apostrophe to possessive "team's" (ChandlerSwift)
+* minor #4471 ReadmeCommandTest - use CommandTester (kubawerlos)
+* minor #4477 DX: control names of public methods in test's classes (kubawerlos)
+* minor #4483 NewWithBracesFixer - Fix object operator and curly brace open cases (SpacePossum)
+* minor #4484 fix typos in README (Sven Ludwig)
+* minor #4494 DX: Fix shell script syntax in order to fix Travis builds (drupol)
+* minor #4516 DX: Lock binary SCA tools versions (keradus)
 
 Changelog for v2.12.10
 ----------------------

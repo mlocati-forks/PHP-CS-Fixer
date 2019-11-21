@@ -12,6 +12,7 @@
 
 namespace PhpCsFixer\Tests\Smoke;
 
+use Keradus\CliExecutor\CliResult;
 use Keradus\CliExecutor\CommandExecutor;
 use PhpCsFixer\Console\Application;
 use PhpCsFixer\Console\Command\DescribeCommand;
@@ -56,7 +57,7 @@ final class PharTest extends AbstractSmokeTest
     {
         static::assertSame(
             str_replace(
-                HelpCOmmand::getLatestReleaseVersionFromChangeLog(),
+                HelpCommand::getLatestReleaseVersionFromChangeLog(),
                 Application::VERSION,
                 file_get_contents(__DIR__.'/../../README.rst')
             ),
