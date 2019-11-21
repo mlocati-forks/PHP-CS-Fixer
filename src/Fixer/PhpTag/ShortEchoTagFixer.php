@@ -139,29 +139,27 @@ EOT
 
     private function longToShort(Tokens $tokens)
     {
-        $offset = 0;
-        for (;;) {
-            $foundEcho = $tokens->findSequence([[\T_OPEN_TAG], [\T_ECHO]], $offset);
-            $foundPrint = $tokens->findSequence([[\T_OPEN_TAG], [\T_PRINT]], $offset);
-            if (null === $foundEcho) {
-                $found = $foundPrint;
-                if (null === $found) {
-                    break;
-                }
-            } elseif (null === $foundPrint || key($foundEcho) < key($foundPrint)) {
-                $found = $foundEcho;
-            } else {
-                $found = $foundPrint;
-            }
-            $startRange = key($found);
-            $offset = $startRange + 1;
-            if (!$this->configuration[self::OPTION_SHORT_ALWAYS] && $this->isComplexCode($tokens, $offset)) {
+        $skipWhenComplexCode = !$this->configuration[self::OPTION_SHORT_ALWAYS];
+        $count = $tokens->count();
+        for ($index = 0; $index < $count; ++$index) {
+            if (!$tokens[$index]->isGivenKind(\T_OPEN_TAG)) {
                 continue;
             }
-            next($found);
-            $endRange = key($found);
-            $newTokens = $this->buildLongToShortTokens($tokens, $startRange, $endRange);
-            $tokens->overrideRange($startRange, $endRange, $newTokens);
+            $nextMeaningful = $tokens->getNextMeaningfulToken($index);
+            if ($nextMeaningful === null) {
+                return;
+            }
+            if (!$tokens[$nextMeaningful]->isGivenKind([\T_ECHO, \T_PRINT])) {
+                $index = $nextMeaningful;
+                continue;
+            }
+            if ($skipWhenComplexCode && $this->isComplexCode($tokens, $nextMeaningful + 1)) {
+                $index = $nextMeaningful;
+                continue;
+            }
+            $newTokens = $this->buildLongToShortTokens($tokens, $index, $nextMeaningful);
+            $tokens->overrideRange($index, $nextMeaningful, $newTokens);
+            $count = $tokens->count();
         }
     }
 
