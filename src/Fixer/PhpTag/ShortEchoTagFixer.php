@@ -146,15 +146,17 @@ EOT
                 continue;
             }
             $nextMeaningful = $tokens->getNextMeaningfulToken($index);
-            if ($nextMeaningful === null) {
+            if (null === $nextMeaningful) {
                 return;
             }
             if (!$tokens[$nextMeaningful]->isGivenKind([\T_ECHO, \T_PRINT])) {
                 $index = $nextMeaningful;
+
                 continue;
             }
             if ($skipWhenComplexCode && $this->isComplexCode($tokens, $nextMeaningful + 1)) {
                 $index = $nextMeaningful;
+
                 continue;
             }
             $newTokens = $this->buildLongToShortTokens($tokens, $index, $nextMeaningful);
@@ -173,7 +175,7 @@ EOT
         $index = -1;
         for (;;) {
             $index = $tokens->getNextTokenOfKind($index, [[\T_OPEN_TAG_WITH_ECHO]]);
-            if ($index === null) {
+            if (null === $index) {
                 return;
             }
             $replace = [new Token([\T_OPEN_TAG, '<?php ']), new Token($echoToken)];
@@ -181,7 +183,7 @@ EOT
                 $replace[] = new Token([\T_WHITESPACE, ' ']);
             }
             $tokens->overrideRange($index, $index, $replace);
-            $index++;
+            ++$index;
         }
     }
 
@@ -192,8 +194,7 @@ EOT
      * This is done by a very quick test: if the tag contains non-whitespace tokens after
      * a semicolon, we consider it as "complex".
      *
-     * @param Tokens $tokens
-     * @param int    $index
+     * @param int $index
      *
      * @return bool
      *
@@ -222,9 +223,8 @@ EOT
     /**
      * Builds the list of tokens that replace a long echo sequence.
      *
-     * @param Tokens $tokens
-     * @param int    $openTagIndex
-     * @param int    $echoTagIndex
+     * @param int $openTagIndex
+     * @param int $echoTagIndex
      *
      * @return Token[]
      */
