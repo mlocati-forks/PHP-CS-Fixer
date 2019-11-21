@@ -20,7 +20,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinition;
 /**
  * @author Vincent Klaiber <hello@vinkla.com>
  *
- * @deprecated in 2.16, proxy to ShortEchoTagFixer
+ * @deprecated proxy to ShortEchoTagFixer
  */
 final class NoShortEchoTagFixer extends AbstractProxyFixer implements DeprecatedFixerInterface
 {
