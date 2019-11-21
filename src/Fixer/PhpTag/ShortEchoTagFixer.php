@@ -192,7 +192,7 @@ EOT
      * of the echo tag contains more than a simple "echo something".
      *
      * This is done by a very quick test: if the tag contains non-whitespace tokens after
-     * a semicolon, we consider it as "complex". 
+     * a semicolon, we consider it as "complex".
      *
      * @param Tokens $tokens
      * @param int    $index
