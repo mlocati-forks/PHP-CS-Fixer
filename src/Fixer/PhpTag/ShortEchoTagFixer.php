@@ -194,14 +194,14 @@ EOT
      * This is done by a very quick test: if the tag contains non-whitespace tokens after
      * a semicolon, we consider it as "complex". 
      *
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
-     * 
+     * @param Tokens $tokens
+     * @param int    $index
+     *
+     * @return bool
+     *
      * @example `<?php echo 1 ?>` is false (not complex)
      * @example `<?php echo 'hello' . 'world'; ?>` is false (not "complex")
      * @example `<?php echo 2; $set = 3 ?>` is true ("complex")
-     *
-     * @return bool
      */
     private function isComplexCode(Tokens $tokens, $index)
     {
@@ -224,11 +224,11 @@ EOT
     /**
      * Builds the list of tokens that replace a long echo sequence.
      *
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int                          $openTagIndex
-     * @param int                          $echoTagIndex
+     * @param Tokens $tokens
+     * @param int    $openTagIndex
+     * @param int    $echoTagIndex
      *
-     * @return \PhpCsFixer\Tokenizer\Token[]
+     * @return Token[]
      */
     private function buildLongToShortTokens(Tokens $tokens, $openTagIndex, $echoTagIndex)
     {
