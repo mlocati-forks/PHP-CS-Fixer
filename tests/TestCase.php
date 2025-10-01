@@ -72,10 +72,16 @@ abstract class TestCase extends BaseTestCase
             $this->previouslyDefinedErrorHandler = set_error_handler(
                 function (
                     int $code,
-                    string $message
+                    string $message,
+                    string $file
                 ) {
                     if (\E_USER_DEPRECATED === $code || \E_DEPRECATED === $code) {
-                        $this->actualDeprecations[] = $message;
+                        if (
+                            !str_contains($message, 'serialization magic method has been deprecated')
+                            || !str_contains($file, \DIRECTORY_SEPARATOR.'vendor'.\DIRECTORY_SEPARATOR)
+                        ) {
+                            $this->actualDeprecations[] = $message;
+                        }
                     }
 
                     return true;
