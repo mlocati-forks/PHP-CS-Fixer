@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - filter-fixer-by-file-WIP
 
 permissions:
   contents: read # to fetch code (actions/checkout)
