@@ -238,6 +238,7 @@ final class SymfonySet extends AbstractRuleSetDefinition
             'statement_indentation' => [
                 'stick_comment_to_next_continuous_control_statement' => true,
             ],
+            'stringable_for_to_string' => true,
             'switch_continue_to_break' => true,
             'trailing_comma_in_multiline' => [
                 'after_heredoc' => true,
@@ -260,6 +261,6 @@ final class SymfonySet extends AbstractRuleSetDefinition
 
     public function getDescription(): string
     {
-        return 'Rules that follow the official `Symfony Coding Standards <https://symfony.com/doc/current/contributing/code/standards.html>`_.';
+        return 'Rules that follow the official `Symfony Coding Standards <https://symfony.com/doc/current/contributing/code/standards.html>`_. Extends ``@PER-CS``.';
     }
 }

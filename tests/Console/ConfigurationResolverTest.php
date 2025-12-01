@@ -39,7 +39,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\RuleSet\RuleSets;
 use PhpCsFixer\Runner\Parallel\ParallelConfig;
 use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
-use PhpCsFixer\Tests\Fixtures\ExternalRuleSet\ExampleRuleset;
+use PhpCsFixer\Tests\Fixtures\ExternalRuleSet\ExampleRuleSet;
 use PhpCsFixer\Tests\TestCase;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\ToolInfoInterface;
@@ -753,26 +753,29 @@ final class ConfigurationResolverTest extends TestCase
 
         yield [
             [
-                'config' => $root.'/.php-cs-fixer.dist.php',
+                'config' => __DIR__.'/../Fixtures/.php-cs-fixer.vanilla.php',
             ],
             false,
         ];
 
         yield [
             [
-                'config' => $root.'/.php-cs-fixer.dist.php',
+                'config' => __DIR__.'/../Fixtures/.php-cs-fixer.vanilla.php',
                 'path' => [$root.'/src'],
             ],
             true,
         ];
 
         yield [
-            [],
+            [
+                'config' => ConfigurationResolver::IGNORE_CONFIG_FILE,
+            ],
             false,
         ];
 
         yield [
             [
+                'config' => ConfigurationResolver::IGNORE_CONFIG_FILE,
                 'path' => [$root.'/src'],
             ],
             false,
@@ -780,7 +783,8 @@ final class ConfigurationResolverTest extends TestCase
 
         yield [
             [
-                'config' => $root.'/.php-cs-fixer.dist.php',
+                'config' => __DIR__.'/../Fixtures/.php-cs-fixer.vanilla.php',
+
                 'path' => [$root.'/src'],
                 'path-mode' => ConfigurationResolver::PATH_MODE_INTERSECTION,
             ],
@@ -1352,7 +1356,8 @@ For more info about updating see: https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/b
 
     public function testItCanRegisterCustomRuleSets(): void
     {
-        $ruleSet = new ExampleRuleset();
+        $ruleSet = new ExampleRuleSet(__METHOD__);
+
         $config = new Config();
         $config->registerCustomRuleSets([$ruleSet]);
         $this
@@ -1449,8 +1454,6 @@ For more info about updating see: https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/b
      * @dataProvider provideGetReporterCases
      *
      * @runInSeparateProcess
-     *
-     * @group sf-8-problematic
      */
     public function testGetReporter(string $expectedFormat, string $formatConfig, array $envs = []): void
     {
