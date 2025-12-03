@@ -19,6 +19,11 @@ namespace PhpCsFixer;
  */
 class NullRuleCustomisationPolicy implements RuleCustomisationPolicyInterface
 {
+    public function policyVersionForCache(): string
+    {
+        return '';
+    }
+
     public function getRuleCustomisers(): array
     {
         return [];
