@@ -30,7 +30,6 @@ final class InternalRuleCustomisationPolicy implements RuleCustomisationPolicyIn
     {
         return [
             // @TODO v3.999: switch to relative path, when Symfony file is used in method prototype
-            // move param to https://github.com/symfony/symfony/blob/8.0/src/Symfony/Component/Finder/SplFileInfo.php ?
             'no_useless_concat_operator' => static fn (\SplFileInfo $file): bool => str_ends_with($file->getRealPath(), 'src/Console/Application.php'),
         ];
     }
