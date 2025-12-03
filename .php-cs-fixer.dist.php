@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 
 use PhpCsFixer\Config;
+use PhpCsFixer\Config\Internal\InternalRuleCustomisationPolicy;
 use PhpCsFixer\Finder;
 use PhpCsFixer\Fixer\Internal\ConfigurableFixerTemplateFixer;
 use PhpCsFixer\RuleSet\Sets\Internal\InternalRiskySet;
@@ -50,6 +51,7 @@ return (new Config())
     ->registerCustomFixers(class_exists(ConfigurableFixerTemplateFixer::class) ? [
         new ConfigurableFixerTemplateFixer(),  // @TODO shall be registered while registering the Set with it
     ] : [])
+    ->setRuleCustomisationPolicy(class_exists(InternalRuleCustomisationPolicy::class) ? new InternalRuleCustomisationPolicy() : null)
     ->setRules([
         '@auto' => true,
         '@auto:risky' => true,
@@ -71,7 +73,6 @@ return (new Config())
         ],
         'modernize_strpos' => true, // needs PHP 8+ or polyfill
         'native_constant_invocation' => ['strict' => false], // strict:false to not remove `\` on low-end PHP versions for not-yet-known consts
-        'no_useless_concat_operator' => false, // TODO switch back on when the `src/Console/Application.php` no longer needs the concat
         'numeric_literal_separator' => true,
         'phpdoc_order' => [
             'order' => [
