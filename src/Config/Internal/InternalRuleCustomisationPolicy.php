@@ -29,7 +29,7 @@ final class InternalRuleCustomisationPolicy implements RuleCustomisationPolicyIn
     public function getRuleCustomisers(): array
     {
         return [
-            // @TODO: can't use relative path, like in config file when configuring Finder!
+            // @TODO v3.999: switch to relative path, when Symfony file is used in method prototype
             // move param to https://github.com/symfony/symfony/blob/8.0/src/Symfony/Component/Finder/SplFileInfo.php ?
             'no_useless_concat_operator' => static fn (\SplFileInfo $file): bool => str_ends_with($file->getRealPath(), 'src/Console/Application.php'),
         ];
